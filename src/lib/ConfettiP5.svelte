@@ -1,6 +1,7 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import P5 from "p5-svelte";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
 
   export let amount = 300;
   export let loop = false;
@@ -173,35 +174,50 @@
       confetties.position = p5.createVector(p5.width / 2, -40);
     };
 
-    p5.mousePressed = () => {
-      p5.next = 0;
-      pressure = true;
-    };
+    // p5.mousePressed = () => {
+    //   p5.next = 0;
+    //   pressure = true;
+    // };
 
-    p5.mouseReleased = () => {
-      pressure = false;
-      confetties.gravity.y = 0.1;
-      confetties.gravity.x = 0;
-    };
+    // p5.mouseReleased = () => {
+    //   pressure = false;
+    //   confetties.gravity.y = 0.1;
+    //   confetties.gravity.x = 0;
+    // };
   };
 
   let fallenParticlesAmount = 0;
 
   $: hasFinished = fallenParticlesAmount >= amount;
 
+  onMount(() => {
+    dispatch("start");
+  });
+
+  onDestroy(() => {
+    dispatch("destory");
+  });
+
+  $: {
+    dispatch("eachfall", fallenParticlesAmount);
+  }
+
   $: {
     if (hasFinished) {
-      dispatch("destroy");
+      dispatch("done");
     }
   }
 </script>
 
-{fallenParticlesAmount}/{amount}
-{hasFinished}
+<!-- {fallenParticlesAmount}/{amount}
+{hasFinished} -->
 
 {#if !hasFinished || !destoryOnFinish || loop}
-  <h1>CANVAS</h1>
-  <div style="position: {position};z-index: {zIndex};">
+  <!-- <h1>CANVAS</h1> -->
+  <div
+    class="confetti-p5-container"
+    style="pointer-events:none; position: {position};z-index: {zIndex};"
+  >
     <P5 {sketch} />
   </div>
 {/if}
