@@ -155,7 +155,7 @@
     {/if}
   {/key}
   <footer>
-    <a href="">View source code</a>
+    <a href="https://github.com/elron/svelte-confetti-p5/blob/master/src/routes/%2Bpage.svelte" target="_blank">View source code</a>
   </footer>
 </div>
 
