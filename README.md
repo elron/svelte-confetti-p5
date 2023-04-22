@@ -75,6 +75,10 @@ pnpm i -D svelte-confetti-p5@latest
 | `on:destroy` | Fires when the canvas is destroyed, automaticlly happens when all particles finished falling | - |
 
 
+## Features
+
+- Auto sets the canvas width & height of the screen, even on screen resize.
+
 ## Examples
 
 ### Nice and slow

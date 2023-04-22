@@ -250,4 +250,8 @@
   a {
     color: rgb(73, 109, 217);
   }
+  :global(.p5Canvas) {
+    // This fixes some viability issue in confettipage iframe
+    visibility: visible !important;
+  }
 </style>
