@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { fade, scale, slide } from "svelte/transition";
   import ConfettiP5 from "../lib/ConfettiP5.svelte";
   import { expirable } from "@macfja/svelte-expirable";
 

@@ -2,7 +2,7 @@
 ![npm](https://img.shields.io/npm/dw/svelte-confetti-p5)
 ![npm](https://img.shields.io/npm/v/svelte-confetti-p5)
 
-[DEMO](https://svelte-confetti-p5.netlify.app/) | [REPL](https://svelte.dev/repl/e53fabec5bc24ca58655c23ee4b4eaa0?version=3.58.0)
+[DEMO](https://svelte-confetti-p5.netlify.app/) | [REPL](https://svelte.dev/repl/f68f6e5ef1ee4c709838afcc4a8e27b2?version=3.58.0)
 
 
 # svelte-confetti-p5 🎊
@@ -121,7 +121,8 @@ pnpm i -D svelte-confetti-p5
 ```
 
 > ## More examples [here](https://svelte-confetti-p5.netlify.app/)
-> ## Playground [here]()
+> ## REPL Playground [here](https://svelte.dev/repl/f68f6e5ef1ee4c709838afcc4a8e27b2?version=3.58.0)
+
 
 
 # Used by

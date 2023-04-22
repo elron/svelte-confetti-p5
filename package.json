@@ -1,7 +1,7 @@
 {
 	"name": "svelte-confetti-p5",
 	"description": "An awesome svelte realistic fullpage confetti animation, that can be customized in creative ways like snow flakes, falling balls and more.",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"author": "Elron Bucai",
 	"license": "MIT",
 	"keywords": [
