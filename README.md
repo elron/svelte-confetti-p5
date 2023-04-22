@@ -70,7 +70,7 @@ pnpm i -D svelte-confetti-p5
 | Dispatcher	|   Description | event returns
 |---|---|---|
 | `on:start` | Fires when the confetti animation starts | - |
-| `on:eachfall` | Fires when a single confetti particle has falled | `on:eachfall=(e => e.detail)` returns the total amount of particles falled | |
+| `on:eachfall` | Fires when a single confetti particle has falled | `on:eachfall=(e => e.detail)` returns the total amount of particles falled so far | |
 | `on:done` | Fires when all confetti particles fall | - |
 | `on:destroy` | Fires when the canvas is destroyed, automaticlly happens when all particles finished falling | - |
 
