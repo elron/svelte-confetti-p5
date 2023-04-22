@@ -27,7 +27,7 @@ No CSS animations, but html Canvas created using [P5.js](https://p5js.org/) (lib
 
 ```bash
 # pnpm
-pnpm i -D svelte-confetti-p5
+pnpm i -D svelte-confetti-p5@latest
 ```
 > pnpm is used here just as an example, you can use your package of choice
 
