@@ -2,7 +2,7 @@
 ![npm](https://img.shields.io/npm/dw/svelte-confetti-p5)
 ![npm](https://img.shields.io/npm/v/svelte-confetti-p5)
 
-[DEMO](https://svelte-confetti-p5.netlify.app/) | [REPL](https://svelte.dev/repl/f68f6e5ef1ee4c709838afcc4a8e27b2?version=3.58.0)
+[DEMO & Examples](https://svelte-confetti-p5.netlify.app/) | [REPL](https://svelte.dev/repl/f68f6e5ef1ee4c709838afcc4a8e27b2?version=3.58.0)
 
 
 # svelte-confetti-p5 🎊
