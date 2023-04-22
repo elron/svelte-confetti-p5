@@ -60,9 +60,9 @@ pnpm i -D svelte-confetti-p5
   | weight| `number` | Weight of the particle (this determines the falling speed) | 100
   | rotate| `number` | Rotate particles from side to side because of `wind` | 2
   | flip| `number` | Flip amount to create 3d effect for each particle | 20
-  | position|  `"fixed" \| "absolute"` | Css position of the canvas | "fixed"
+  | position|  `"fixed" \| "absolute"` | CSS position of the canvas | "fixed"
   | zIndex| `number` | z-index of the canvas | 999
-  | destoryOnFinish | `boolean` | If `loop === false`, destroys the canvas when all particles fall | true
+  | destoryOnFinish | `boolean` | Destroys the canvas when all particles fall (Never gets destroyed when `loop` i set `true`, as expected) | true
   | frameRate | `number` | Refresh rate. Changing this will affect the overall speed of the animation. Recommended to keep as default | 60
 
 
