@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { fade, slide } from "svelte/transition";
+  import { fade, scale, slide } from "svelte/transition";
   import ConfettiP5 from "../lib/ConfettiP5.svelte";
   import { expirable } from "@macfja/svelte-expirable";
 
@@ -8,16 +8,23 @@
   let fallenParticles = 0;
 
   const onEachFall = () => fallenParticles++;
-  const onStart = () => statuses.push("on:start", 1);
-  const onDestroy = () => statuses.push("on:destroy", 1);
-  const onDone = () => statuses.push("on:done", 1);
+  const onStart = () => statuses.push(["on:start", new Date()], 2);
+  const onDestroy = () => statuses.push(["on:destroy", new Date()], 2);
+  const onDone = () => statuses.push(["on:done", new Date()], 2);
 
-  const styles = ["Default", 1, 2, 3, 4, 5, 6, 7] as const;
+  const styles = [
+    "Default",
+    "blue slow loop",
+    "child balls",
+    "fire squares",
+    "snow flakes",
+    "ice cubes",
+  ] as const;
   type Style = (typeof styles)[number];
 
   const bgs = [
-    "black",
     "white",
+    "black",
     "gray",
     "tomato",
     "deepskyblue",
@@ -33,6 +40,14 @@
   $: offset = !!offsetColors.includes(currentBg);
 
   let replay = 0;
+
+  $: {
+    currentStyle;
+    replay;
+    forcedDestroy = false;
+  }
+
+  let forcedDestroy = false;
 </script>
 
 <div class="wrapper" style:background={currentBg} class:offset>
@@ -40,8 +55,16 @@
   <div class="option">
     <h3>Status:</h3>
     <button on:click={() => replay++}>Replay</button>
-    {#each $statuses as status}
-      <span in:slide={{ axis: "x" }}>{status.data}</span>
+    <button on:click={() => (forcedDestroy = true)}>Destroy</button>
+    {#each [...$statuses].reverse() as status, i}
+      {status.data[0]}
+      <!-- {#key i}
+        <span out:slide={{ delay: 3000 }}>
+          <span out:fade in:scale={{ start: 0.5 }}
+            >{status.data[0]}</span
+          >
+        </span>
+      {/key} -->
     {/each}
   </div>
   <!-- <div class="option">Particles Fallen: {fallenParticles}</div> -->
@@ -75,90 +98,114 @@
   </div>
 
   {#key replay}
-    {#if currentStyle === "Default"}
-      <ConfettiP5
-        on:eachfall={onEachFall}
-        on:start={onStart}
-        on:done={onDone}
-        on:destory={onDestroy}
-      />
-    {/if}
-    {#if currentStyle === 1}
-      <ConfettiP5
-        on:eachfall={onEachFall}
-        on:start={onStart}
-        on:done={onDone}
-        on:destory={onDestroy}
-        loop
-        colors={["#fbfefd", "#00186a", "#003afb", "#7aa8f7"]}
-        amount={150}
-        weight={100}
-        minSize={5}
-        maxSize={15}
-        spacing={10}
-        flip={3}
-        rotate={3}
-        power={10}
-      />
-    {/if}
-    {#if currentStyle === 2}
-      <ConfettiP5
-        on:eachfall={onEachFall}
-        on:start={onStart}
-        on:done={onDone}
-        on:destory={onDestroy}
-        colors={["#fbfefd", "#00186a", "#003afb", "#7aa8f7"]}
-        amount={50}
-        weight={200}
-        minSize={20}
-        maxSize={50}
-        spacing={3}
-        flip={3}
-        rotate={3}
-        power={20}
-      />
-    {/if}
-    {#if currentStyle === 3}
-      <ConfettiP5
-        on:eachfall={onEachFall}
-        on:start={onStart}
-        on:done={onDone}
-        on:destory={onDestroy}
-        colors={["#e84b5e", "#f9db05", "#fefffc", "#ffbe24"]}
-        shapes="squares"
-        minSize={5}
-        maxSize={25}
-        spacing={15}
-        amount={80}
-        flip={2}
-        power={5}
-        weight={200}
-      />
-    {/if}
-    {#if currentStyle === 4}
-      <ConfettiP5
-        on:eachfall={onEachFall}
-        on:start={onStart}
-        on:done={onDone}
-        on:destory={onDestroy}
-        colors={["#e7edf3", "#e4f3ff", "#b9e1ff", "#a6d9ff"]}
-        shapes="circles"
-        minSize={0}
-        maxSize={14}
-        spacing={5}
-        amount={50}
-        flip={0}
-        wind={0}
-        power={2}
-        weight={50}
-      />
+    {#if !forcedDestroy}
+      {#if currentStyle === "Default"}
+        <ConfettiP5
+          on:eachfall={onEachFall}
+          on:start={onStart}
+          on:done={onDone}
+          on:destory={onDestroy}
+        />
+      {/if}
+      {#if currentStyle === "blue slow loop"}
+        <ConfettiP5
+          on:eachfall={onEachFall}
+          on:start={onStart}
+          on:done={onDone}
+          on:destory={onDestroy}
+          loop
+          colors={["#fbfefd", "#00186a", "#003afb", "#7aa8f7"]}
+          amount={120}
+          minSize={5}
+          maxSize={15}
+          spacing={15}
+          flip={3}
+          wind={0}
+          weight={100}
+          rotate={3}
+          power={0}
+        />
+      {/if}
+      {#if currentStyle === "child balls"}
+        <ConfettiP5
+          on:eachfall={onEachFall}
+          on:start={onStart}
+          on:done={onDone}
+          on:destory={onDestroy}
+          amount={40}
+          weight={300}
+          shapes="circles"
+          minSize={35}
+          maxSize={50}
+          flip={0}
+          power={25}
+          spacing={10}
+          rotate={3}
+        />
+      {/if}
+      {#if currentStyle === "fire squares"}
+        <ConfettiP5
+          on:eachfall={onEachFall}
+          on:start={onStart}
+          on:done={onDone}
+          on:destory={onDestroy}
+          colors={["#e84b5e", "#f9db05", "#fefffc", "#ffbe24"]}
+          shapes="squares"
+          minSize={5}
+          maxSize={25}
+          spacing={15}
+          amount={80}
+          flip={2}
+          power={5}
+          weight={200}
+        />
+      {/if}
+      {#if currentStyle === "snow flakes"}
+        <ConfettiP5
+          on:eachfall={onEachFall}
+          on:start={onStart}
+          on:done={onDone}
+          on:destory={onDestroy}
+          colors={["#e7edf3", "#e4f3ff", "#b9e1ff", "#a6d9ff"]}
+          shapes="circles"
+          minSize={0}
+          maxSize={14}
+          spacing={5}
+          amount={50}
+          flip={0}
+          wind={0}
+          power={2}
+          weight={50}
+        />
+      {/if}
+      {#if currentStyle === "ice cubes"}
+        <ConfettiP5
+          on:eachfall={onEachFall}
+          on:start={onStart}
+          on:done={onDone}
+          on:destory={onDestroy}
+          colors={["#e7edf3", "#e4f3ff", "#b9e1ff", "#a6d9ff"]}
+          shapes="squares"
+          minSize={20}
+          maxSize={40}
+          spacing={30}
+          amount={30}
+          rotate={0.2}
+          flip={0}
+          wind={0}
+          power={-10}
+          weight={500}
+        />
+      {/if}
     {/if}
   {/key}
   <footer>
-    <a href="https://github.com/elron/svelte-confetti-p5/blob/master/src/routes/%2Bpage.svelte" target="_blank">View source code</a>
+    <a
+      href="https://github.com/elron/svelte-confetti-p5/blob/master/src/routes/%2Bpage.svelte"
+      target="_blank">View source code on GitHub</a
+    >
   </footer>
 </div>
-
 
 <style lang="scss">
   :global(body) {
@@ -200,5 +247,8 @@
     padding: 0.5em 0.8em;
     font-weight: bold;
     border-radius: 0.5em;
+  }
+  a {
+    color: rgb(73, 109, 217);
   }
 </style>

@@ -1,24 +1,27 @@
 {
 	"name": "svelte-confetti-p5",
-	"description": "Add animated headline to your header banner, or anywhere else you want to grab attention in an informative way.",
-	"version": "0.0.0",
+	"description": "An awesome svelte realistic fullpage confetti animation, that can be customized in creative ways like snow flakes, falling balls and more.",
+	"version": "0.0.1",
 	"author": "Elron Bucai",
 	"license": "MIT",
 	"keywords": [
 		"svelte",
 		"sveltejs",
 		"confetti",
+		"confetties",
+		"snow flakes",
+		"canvas",
 		"p5",
 		"animation",
 		"animated"
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/elron/svelte-animated-headline.git"
+		"url": "https://github.com/elron/svelte-confetti-p5.git"
 	},
-	"homepage": "https://svelte-animated-headline.netlify.app/",
+	"homepage": "https://svelte-confetti-p5.netlify.app/",
 	"bugs": {
-		"url": "https://github.com/elron/svelte-animated-headline/issues"
+		"url": "https://github.com/elron/svelte-confetti-p5/issues"
 	},
 	"scripts": {
 		"dev": "vite dev",

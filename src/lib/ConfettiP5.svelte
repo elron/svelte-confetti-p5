@@ -190,12 +190,14 @@
 
   $: hasFinished = fallenParticlesAmount >= amount;
 
+  $: shouldShow = !hasFinished || !destoryOnFinish || loop;
+
   onMount(() => {
     dispatch("start");
   });
 
   onDestroy(() => {
-    dispatch("destory");
+    if (!shouldShow) dispatch("destory");
   });
 
   $: {
@@ -212,7 +214,7 @@
 <!-- {fallenParticlesAmount}/{amount}
 {hasFinished} -->
 
-{#if !hasFinished || !destoryOnFinish || loop}
+{#if shouldShow}
   <!-- <h1>CANVAS</h1> -->
   <div
     class="confetti-p5-container"
