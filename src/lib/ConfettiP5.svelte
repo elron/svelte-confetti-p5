@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
   import P5 from "p5-svelte";
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
 
