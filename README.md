@@ -60,6 +60,8 @@ pnpm i -D svelte-confetti-p5@latest
   | weight| `number` | Weight of the particle (this determines the falling speed) | 100
   | rotate| `number` | Rotate particles from side to side because of `wind` | 2
   | flip| `number` | Flip amount to create 3d effect for each particle | 20
+  | w |  `number` | Canvas width | window width |
+  | h |  `number` | Canvas height | window height |
   | position|  `"fixed" \| "absolute"` | CSS position of the canvas | "fixed"
   | zIndex| `number` | z-index of the canvas | 999
   | destoryOnFinish | `boolean` | Destroys the canvas when all particles fall (Never gets destroyed when `loop` i set `true`, as expected) | true

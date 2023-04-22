@@ -2,6 +2,8 @@
   import P5 from "p5-svelte";
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
 
+  export let w = 0;
+  export let h = 0;
   export let amount = 300;
   export let loop = false;
   export let minSize = 5;
@@ -148,7 +150,7 @@
     let confetties;
 
     p5.setup = () => {
-      p5.createCanvas(p5.windowWidth, p5.windowHeight);
+      p5.createCanvas(w || p5.windowWidth, h || p5.windowHeight);
       p5.frameRate(frameRate);
       oldVector = p5.createVector(0, 0);
       newVector = p5.createVector(0, 0);
@@ -169,9 +171,10 @@
     };
 
     p5.windowResized = () => {
-      p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
+      p5.resizeCanvas(w || p5.windowWidth, h || p5.windowHeight);
       confetties.position = p5.createVector(p5.width / 2, -40);
     };
+
 
     // p5.mousePressed = () => {
     //   p5.next = 0;
@@ -184,7 +187,7 @@
     //   confetties.gravity.x = 0;
     // };
   };
-
+  
   let fallenParticlesAmount = 0;
 
   $: hasFinished = fallenParticlesAmount >= amount;
