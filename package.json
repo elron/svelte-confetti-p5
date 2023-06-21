@@ -1,7 +1,7 @@
 {
 	"name": "svelte-confetti-p5",
 	"description": "An awesome svelte realistic fullpage confetti animation, that can be customized in creative ways like snow flakes, falling balls and more.",
-	"version": "0.0.8",
+	"version": "0.1.0",
 	"author": "Elron Bucai",
 	"license": "MIT",
 	"keywords": [
@@ -24,7 +24,7 @@
 		"url": "https://github.com/elron/svelte-confetti-p5/issues"
 	},
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "vite dev --host",
 		"build": "vite build && npm run package",
 		"preview": "vite preview",
 		"package": "svelte-kit sync && svelte-package && publint",

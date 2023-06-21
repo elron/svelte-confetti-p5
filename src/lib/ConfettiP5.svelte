@@ -40,6 +40,9 @@
 
   const dispatch = createEventDispatcher();
 
+  let p5ref = undefined
+
+
   const sketch = (p5) => {
     let newVector, oldVector, pressure;
 
@@ -158,6 +161,8 @@
         amount,
         p5.createVector(p5.width / 2, -20)
       );
+
+      p5ref = p5
     };
 
     p5.draw = () => {
@@ -175,7 +180,6 @@
       confetties.position = p5.createVector(p5.width / 2, -40);
     };
 
-
     // p5.mousePressed = () => {
     //   p5.next = 0;
     //   pressure = true;
@@ -187,7 +191,7 @@
     //   confetties.gravity.x = 0;
     // };
   };
-  
+
   let fallenParticlesAmount = 0;
 
   $: hasFinished = fallenParticlesAmount >= amount;
@@ -200,6 +204,17 @@
 
   onDestroy(() => {
     if (!shouldShow) dispatch("destory");
+  });
+
+
+  // fixes memory leak
+  // https://github.com/tonyketcham/p5-svelte/issues/322
+  // https://github.com/mlhoutel/garden/blob/1024a14e66b9cc37536795fac18b08c8e46dc06f/src/library/components/projects/Canvas.svelte#L31-L36
+  onDestroy(() => {
+    if (p5ref) {
+      p5ref.remove();
+      p5ref = undefined;
+    }
   });
 
   $: {
