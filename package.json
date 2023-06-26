@@ -63,6 +63,7 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
+		"@types/p5": "^1.6.2",
 		"p5-svelte": "^3.1.2"
 	}
 }
