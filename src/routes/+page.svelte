@@ -58,8 +58,8 @@
     {#each [...$statuses].reverse() as status, i}
       {status.data[0]}
       <!-- {#key i}
-        <span out:slide={{ delay: 3000 }}>
-          <span out:fade in:scale={{ start: 0.5 }}
+        <span out:slide|global={{ delay: 3000 }}>
+          <span out:fade|global in:scale|global={{ start: 0.5 }}
             >{status.data[0]}</span
           >
         </span>
