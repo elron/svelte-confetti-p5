@@ -12,7 +12,7 @@
   export let power = 10;
   export let spacing = 10;
   export let frameRate = 60;
-  export let shapes: "squares" | "circles" | "mix" = "mix";
+  export let shapes: "squares" | "circles" | "images" | "mix" = "mix";
   export let position: "fixed" | "absolute" = "fixed";
   export let zIndex = 999;
   export let weight = 100;
@@ -37,16 +37,34 @@
     "#FF9800",
     "#FF5722",
   ];
+  export let images: string[]; // array of image URLs
+  let imagesLoaded = [];
 
   const dispatch = createEventDispatcher();
 
-  let p5ref = undefined
-
+  let p5ref = undefined;
 
   const sketch = (p5) => {
     let newVector, oldVector, pressure;
 
     class Particle {
+      parent: any;
+      gravity: any;
+      shape: any;
+      step: number;
+      take: number;
+      takeFactor: any;
+      multFactor: any;
+      takeAngle: number;
+      takeSpeed: number;
+      isImage: boolean;
+      image: any;
+      position: any;
+      velocity: any;
+      friction: any;
+      size: any;
+      half: number;
+      color: any;
       constructor(parent) {
         this.parent = parent;
         this.gravity = parent.gravity;
@@ -63,6 +81,17 @@
         this.multFactor = p5.random(0.01, 0.08);
         this.takeAngle = 0;
         this.takeSpeed = 0.05;
+
+        this.isImage = false;
+        if (imagesLoaded.length) {
+          if (shapes === "mix" && p5.random() > 0.5) {
+            this.isImage = true;
+            this.image = p5.random(imagesLoaded);
+          } else if (shapes === "images") {
+            this.isImage = true;
+            this.image = p5.random(imagesLoaded);
+          }
+        }
       }
       reset() {
         this.position = this.parent.position.copy();
@@ -93,7 +122,22 @@
         p5.noStroke();
         p5.fill(this.color);
 
-        if (this.shape === 0) {
+        if (this.isImage) {
+          console.log("Rendering image...");
+          // Custom square size
+          // p5.image(this.image, -this.half, -this.half, this.size, this.size);
+
+          const imgWidth = this.image.width;
+          const imgHeight = this.image.height;
+          // Original Image size
+          p5.image(
+            this.image,
+            -imgWidth / 2,
+            -imgHeight / 2,
+            imgWidth,
+            imgHeight
+          );
+        } else if (this.shape === 0) {
           p5.rect(-this.half, -this.half, this.size, this.size);
         } else {
           p5.ellipse(0, 0, this.size, this.size);
@@ -102,33 +146,79 @@
         p5.resetMatrix();
       }
       integrate() {
+        // Apply gravity to the velocity
         this.velocity.add(this.gravity);
+
+        // Adjust the x velocity by the 'take' value (this seems to introduce some random motion)
         this.velocity.x += this.take;
+
+        // Apply friction to the velocity
         this.velocity.mult(this.friction);
+
+        // Update the position using the velocity
         this.position.add(this.velocity);
 
-        if (this.position.y > p5.height) {
-          fallenParticlesAmount += 1;
-          if (loop) this.reset();
-          else this.destroy();
-        }
-        if (this.position.x < 0) {
-          fallenParticlesAmount += 1;
-          if (loop) this.reset();
-          else this.destroy();
-        }
-        if (this.position.x > p5.width + 10) {
-          fallenParticlesAmount += 1;
-          if (loop) this.reset();
-          else this.destroy();
+        // Check if the particle is an image
+        if (this.isImage) {
+          // For image particles, we need to account for their size when checking for out-of-bounds conditions
+
+          // Check if the top of the image has gone past the bottom of the screen
+          if (this.position.y - this.image.height / 2 > p5.height) {
+            fallenParticlesAmount += 1;
+            if (loop) this.reset();
+            else this.destroy();
+          }
+
+          // Check if the right edge of the image has gone past the left of the screen
+          if (this.position.x + this.image.width / 2 < 0) {
+            fallenParticlesAmount += 1;
+            if (loop) this.reset();
+            else this.destroy();
+          }
+
+          // Check if the left edge of the image has gone past the right of the screen
+          if (this.position.x - this.image.width / 2 > p5.width) {
+            fallenParticlesAmount += 1;
+            if (loop) this.reset();
+            else this.destroy();
+          }
+        } else {
+          // For non-image particles, we only need to check the central position
+
+          // Check if the particle has gone past the bottom of the screen
+          if (this.position.y > p5.height) {
+            fallenParticlesAmount += 1;
+            if (loop) this.reset();
+            else this.destroy();
+          }
+
+          // Check if the particle has gone past the left of the screen
+          if (this.position.x < 0) {
+            fallenParticlesAmount += 1;
+            if (loop) this.reset();
+            else this.destroy();
+          }
+
+          // Check if the particle has gone past the right of the screen
+          if (this.position.x > p5.width) {
+            fallenParticlesAmount += 1;
+            if (loop) this.reset();
+            else this.destroy();
+          }
         }
       }
+
       render() {
         this.integrate();
         this.draw();
       }
     }
     class ParticleSystem {
+      position: any;
+      maxNumber: any;
+      gravity: any;
+      friction: number;
+      Particles: never[];
       constructor(maxNumber, position, gravity) {
         this.position = position.copy();
         this.maxNumber = maxNumber;
@@ -152,6 +242,14 @@
     }
     let confetties;
 
+    p5.preload = () => {
+      if (images?.length) {
+        for (let i = 0; i < images.length; i++) {
+          imagesLoaded[i] = p5.loadImage(images[i]);
+        }
+      }
+    };
+
     p5.setup = () => {
       p5.createCanvas(w || p5.windowWidth, h || p5.windowHeight);
       p5.frameRate(frameRate);
@@ -162,7 +260,7 @@
         p5.createVector(p5.width / 2, -20)
       );
 
-      p5ref = p5
+      p5ref = p5;
     };
 
     p5.draw = () => {
@@ -205,7 +303,6 @@
   onDestroy(() => {
     if (!shouldShow) dispatch("destory");
   });
-
 
   // fixes memory leak
   // https://github.com/tonyketcham/p5-svelte/issues/322

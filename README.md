@@ -55,7 +55,8 @@ pnpm i -D svelte-confetti-p5@latest
   | loop|`boolean` | Rain forever or until all particles fall | false
   | spacing | `number` | Spacing between particles | 10
   | power | `number` | The force of the confetti when it starts | 10
-  | shapes | `"squares" \| "circles" \| "mix"` | Particle shapes | "mix"
+  | shapes | `"squares" \| "circles" \| "mix" \| "images"` | Particle shapes. (mix = circles&squares.images = only images) | "mix"
+  | images | `string[]` | Image URLS / Base64 Images | []
   | wind|  `number`| Wind from sides | 6
   | weight| `number` | Weight of the particle (this determines the falling speed) | 100
   | rotate| `number` | Rotate particles from side to side because of `wind` | 2

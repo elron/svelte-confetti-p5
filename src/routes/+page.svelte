@@ -1,6 +1,7 @@
 <script lang="ts">
   import ConfettiP5 from "../lib/ConfettiP5.svelte";
   import { expirable } from "@macfja/svelte-expirable";
+  import { cat1, cat2 } from "./cats";
 
   export const statuses = expirable();
 
@@ -18,6 +19,7 @@
     "fire squares",
     "snow flakes",
     "ice cubes",
+    "cat images",
   ] as const;
   type Style = (typeof styles)[number];
 
@@ -194,6 +196,23 @@
           wind={0}
           power={-10}
           weight={500}
+        />
+      {/if}
+      {#if currentStyle === "cat images"}
+        <ConfettiP5
+          on:eachfall={onEachFall}
+          on:start={onStart}
+          on:done={onDone}
+          on:destory={onDestroy}
+          shapes="images"
+          flip={0}
+          amount={100}
+          spacing={30}
+          power={0}
+          rotate={0.2}
+          weight={110}
+          wind={15}
+          images={[cat2,cat1]}
         />
       {/if}
     {/if}
